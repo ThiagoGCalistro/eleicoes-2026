@@ -11,9 +11,11 @@ Site estático que mostra o 1º e o 2º turnos da eleição presidencial de 2026
 
 ## Como ver
 
-Abra `site/index.html` no navegador. Não precisa de servidor: os dados ficam em `site/dados.js` e `site/municipios.js`.
+Online: <https://thiagogcalistro.github.io/eleicoes-2026/>
 
-Para publicar no GitHub Pages, aponte o Pages para a pasta `site/`.
+Localmente: abra `site/index.html` no navegador. Não precisa de servidor: os dados ficam em `site/dados.js` e `site/municipios.js`.
+
+A cada push na `main` que altere a pasta `site/`, o workflow `.github/workflows/pages.yml` publica o site no GitHub Pages.
 
 ## Como atualizar os dados
 
