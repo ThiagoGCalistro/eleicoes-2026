@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eleições 2026 nas urnas</title>
+  <meta name="description" content="1º e 2º turnos das eleições presidenciais de 2026 a partir dos logs e boletins das urnas eletrônicas publicados pelo TSE.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="pagina">
+
+  <header class="topo">
+    <div class="topo-linha">
+      <div>
+        <span class="selo" id="selo-dados">Carregando dados…</span>
+        <h1>Eleições 2026 nas urnas</h1>
+        <p class="lead">O que os logs e os boletins das urnas eletrônicas, publicados pelo TSE, mostram sobre o 1º e o 2º turnos para Presidente, incluindo os votos registrados depois das 17h.</p>
+      </div>
+      <button class="tema" id="tema" type="button" aria-label="Alternar tema claro/escuro">◐ Tema</button>
+    </div>
+    <nav class="indice" aria-label="Seções">
+      <a href="#resultado">Resultado</a>
+      <a href="#comparativo">1º × 2º turno</a>
+      <a href="#brancos-nulos">Brancos, nulos e abstenção</a>
+      <a href="#segundo-turno">2º turno em detalhe</a>
+      <a href="#apos-17h">Votos após as 17h</a>
+      <a href="#urnas-tardias">Urnas tardias</a>
+      <a href="#metodologia">Metodologia</a>
+    </nav>
+  </header>
+
+  <section id="resultado">
+    <h2>Resultado do 2º turno</h2>
+    <p class="sub" id="resultado-sub"></p>
+    <div class="cartao">
+      <div class="placar" id="placar"></div>
+    </div>
+    <div class="tiles" id="tiles-resultado"></div>
+  </section>
+
+  <section id="comparativo">
+    <h2>1º turno × 2º turno</h2>
+    <p class="sub">Participação, ritmo de votação e horário de fechamento das seções nos dois domingos. Os números de participação são oficiais; o ritmo e o tempo na cabine vêm dos logs das urnas.</p>
+    <div class="tiles" id="tiles-comparativo"></div>
+
+    <div class="grade-2">
+      <div class="cartao">
+        <h3>Em que hora as pessoas votaram</h3>
+        <p class="desc">Parte dos votos do dia computada em cada hora (horário de Brasília).</p>
+        <div class="legenda" id="leg-curva"></div>
+        <div class="grafico" id="g-curva"></div>
+        <p class="nota" id="nota-curva"></p>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-curva"></div></details>
+      </div>
+      <div class="cartao">
+        <h3>A que horas as seções fecharam</h3>
+        <p class="desc">Parte das seções em cada faixa de horário de encerramento (horário de Brasília).</p>
+        <div class="legenda" id="leg-enc"></div>
+        <div class="grafico" id="g-enc"></div>
+        <p class="nota" id="nota-enc"></p>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-enc"></div></details>
+      </div>
+    </div>
+
+    <div class="cartao" style="margin-top:16px">
+      <h3>Quanto cada finalista cresceu do 1º para o 2º turno</h3>
+      <p class="desc">Votos ganhos entre os dois turnos em cada região e quanto cada uma respondeu pelo crescimento total do candidato (resultado oficial).</p>
+      <div class="legenda" id="leg-ganho"></div>
+      <div class="grafico" id="g-ganho"></div>
+      <p class="nota" id="nota-ganho"></p>
+      <details class="tabela"><summary>Ver tabela por região e UF</summary><div class="tabela-wrap" id="t-ganho"></div></details>
+    </div>
+  </section>
+
+  <section id="brancos-nulos">
+    <h2>Brancos, nulos e abstenção</h2>
+    <p class="sub">Totais oficiais do dia inteiro, sem recorte de horário. Brancos e nulos são do voto para Presidente e contam como parte de quem compareceu; abstenção é o eleitor apto que não foi votar.</p>
+    <div class="tiles" id="tiles-bna"></div>
+    <div class="grade-3" id="g-bna-multiplos"></div>
+
+    <div class="filtros" role="group" aria-label="Indicador mostrado por estado e por município">
+      <button type="button" data-bna="abst" aria-pressed="true">Abstenção</button>
+      <button type="button" data-bna="br" aria-pressed="false">Brancos</button>
+      <button type="button" data-bna="nu" aria-pressed="false">Nulos</button>
+    </div>
+    <div class="cartao">
+      <h3>Por estado, 1º turno → 2º turno</h3>
+      <p class="desc" id="desc-halter"></p>
+      <div class="legenda" id="leg-halter"></div>
+      <div class="grafico" id="g-halter"></div>
+      <details class="tabela"><summary>Ver tabela por UF</summary><div class="tabela-wrap" id="t-bna-uf"></div></details>
+    </div>
+
+    <div class="cartao">
+      <h3>Por município</h3>
+      <p class="desc" id="desc-bna-mun"></p>
+      <p style="margin:0 0 10px"><input type="search" id="busca-bna" placeholder="Buscar cidade ou UF"> <a href="municipios_brancos_nulos_abstencao.csv" download>Baixar CSV com todos os municípios</a></p>
+      <div class="tabela-wrap" id="t-bna-mun"></div>
+    </div>
+  </section>
+
+  <section id="segundo-turno">
+    <h2>2º turno em detalhe</h2>
+    <p class="sub">Resultado por estado e como foi o dia de votação em 25/10/2026.</p>
+    <div class="tiles" id="tiles-2t"></div>
+    <div class="cartao">
+      <h3>Resultado por estado</h3>
+      <p class="desc">Divisão dos votos válidos em cada UF, ordenada pela vantagem de cada candidato.</p>
+      <div class="legenda" id="leg-uf"></div>
+      <div class="grafico" id="g-uf"></div>
+      <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-uf"></div></details>
+    </div>
+    <div class="grade-2">
+      <div class="cartao">
+        <h3>Votos por hora no 2º turno</h3>
+        <p class="desc">Votos computados em cada hora (horário de Brasília), contados nos logs das urnas.</p>
+        <div class="grafico" id="g-hora2"></div>
+        <p class="nota" id="nota-hora2"></p>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-hora2"></div></details>
+      </div>
+      <div class="cartao">
+        <h3>Resultado por região</h3>
+        <p class="desc">Votos válidos de cada candidato por região.</p>
+        <div class="legenda" id="leg-reg2"></div>
+        <div class="grafico" id="g-reg2"></div>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-reg2"></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="apos-17h">
+    <h2>Votos depois das 17h</h2>
+    <p class="sub">Quantos votos as urnas registraram depois das 17h (horário de Brasília), onde isso aconteceu e quanto pesou para cada candidato.</p>
+
+    <div class="cartao contexto">
+      <h3>O que aconteceu no 2º turno</h3>
+      <ol>
+        <li>No domingo, 25/10, o ministro Cristiano Zanin (STF) autorizou que a votação fosse até as 19h, horário de Brasília, <strong>em todo o país</strong>, mas só nas seções que ainda estivessem abertas. A prorrogação não foi restrita ao Nordeste.</li>
+        <li>As duas campanhas tinham pedido prorrogação: a de Lula citou problemas no transporte de eleitores; a de Flávio Bolsonaro pediu para 17 cidades de SP, PR e SC atingidas por chuvas.</li>
+        <li>O TSE só comunicou os TREs às 17h49, quando a maior parte das seções já tinha encerrado.</li>
+        <li>Mesmo sem prorrogação, quem está na fila às 17h recebe senha e vota depois desse horário (Código Eleitoral, art. 153). Por isso toda eleição tem votos após as 17h, como mostra o 1º turno.</li>
+      </ol>
+      <p class="nota">Fontes: <a href="https://www.poder360.com.br/poder-eleicoes-2026/leia-a-cronologia-da-ampliacao-do-horario-de-votacao-no-2o-turno/">Poder360</a>, <a href="https://www.otempo.com.br/eleicoes/2026/presidentes/2026/10/25/pela-1-vez-no-brasil-votacao-e-prorrogada-em-todo-o-pais-mas-ordem-chega-com-urnas-ja-lacradas">O Tempo</a>, <a href="https://www.cartacapital.com.br/politica/lula-e-flavio-bolsonaro-pedem-ao-tse-prorrogacao-da-votacao-ate-as-19h/">CartaCapital</a>, <a href="https://exame.com/brasil/tse-aprova-a-extensao-do-horario-de-votacao-do-2o-turno-para-as-19h/">Exame</a>.</p>
+    </div>
+
+    <div class="aviso-dados" id="aviso-pos17"></div>
+    <div class="tiles" id="tiles-pos17"></div>
+
+    <div class="cartao">
+      <h3>Cidades com votos depois das 17h no 2º turno</h3>
+      <p class="desc" id="desc-cidades"></p>
+      <div class="filtros" role="group" aria-label="Filtrar cidades por região">
+        <button type="button" data-filtro="todas" aria-pressed="true">Todas</button>
+        <button type="button" data-filtro="nordeste" aria-pressed="false">Só Nordeste</button>
+        <button type="button" data-filtro="fora" aria-pressed="false">Fora do Nordeste</button>
+      </div>
+      <div class="legenda" id="leg-cidades"></div>
+      <div class="rolagem"><div class="grafico" id="g-cidades"></div></div>
+      <details class="tabela"><summary>Ver todas as cidades</summary>
+        <p style="margin:10px 0"><input type="search" id="busca-cidade" placeholder="Buscar cidade ou UF"> <a href="municipios_pos17h_2turno.csv" download>Baixar CSV</a></p>
+        <div class="tabela-wrap" id="t-cidades"></div>
+      </details>
+    </div>
+
+    <div class="grade-2">
+      <div class="cartao">
+        <h3>Votos após as 17h por região</h3>
+        <p class="desc">Votos computados a partir das 17h (Brasília) em cada região, nos dois turnos.</p>
+        <div class="legenda" id="leg-reg17"></div>
+        <div class="grafico" id="g-reg17"></div>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-reg17"></div></details>
+      </div>
+      <div class="cartao">
+        <h3>Depois das 17h, em que horário</h3>
+        <p class="desc">Votos após as 17h nos dois turnos, separados pela hora do aviso do TSE no 2º turno (17h49) e pelo novo limite (19h).</p>
+        <div class="legenda" id="leg-faixas17"></div>
+        <div class="grafico" id="g-faixas17"></div>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-faixas17"></div></details>
+      </div>
+    </div>
+
+    <div class="cartao">
+      <h3>Quanto isso representou para cada candidato</h3>
+      <p class="desc">O voto é secreto: o log registra a hora de cada voto, mas não em quem a pessoa votou. Por isso não existe a divisão dos votos após as 17h por candidato. Com dados oficiais dá para afirmar duas coisas: o resultado do dia inteiro nas seções onde houve voto após as 17h (boletim de urna) e o máximo que esses votos poderiam representar para cada candidato.</p>
+      <div class="legenda" id="leg-cand17"></div>
+      <div class="grafico" id="g-cand17"></div>
+      <div class="impacto" id="impacto" style="margin-top:16px"></div>
+      <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-cand17"></div></details>
+    </div>
+
+    <div class="cartao">
+      <h3>A prorrogação poderia ter mudado o resultado?</h3>
+      <p class="desc">Comparação entre a diferença final de votos e o total de votos dados depois das 17h, no pior cenário possível: todos para o vencedor.</p>
+      <div class="grafico" id="g-escala"></div>
+      <p class="conclusao" id="conclusao"></p>
+    </div>
+  </section>
+
+  <section id="urnas-tardias">
+    <h2>Urnas tardias</h2>
+    <p class="sub">Seções que ainda estavam abertas às 17h49 do 2º turno, quando o TSE avisou os TREs da prorrogação. O critério é o horário oficial de encerramento no Boletim de Urna: 17h49 ou depois, no horário de Brasília. No 1º turno, o mesmo critério mostra as seções que fecharam tarde sem prorrogação.</p>
+    <div class="tiles" id="tiles-tardias"></div>
+
+    <div class="grade-2">
+      <div class="cartao">
+        <h3>Até que horas houve eleitor votando nelas</h3>
+        <p class="desc">Horário do último voto em cada seção que fechou às 17h49 ou depois, nos dois turnos.</p>
+        <div class="legenda" id="leg-tard-ultimo"></div>
+        <div class="grafico" id="g-tard-ultimo"></div>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-tard-ultimo"></div></details>
+      </div>
+      <div class="cartao">
+        <h3>A que horas as urnas tardias fecharam</h3>
+        <p class="desc">Urnas tardias do 2º turno por horário de encerramento, em faixas de 10 minutos (Brasília).</p>
+        <div class="grafico" id="g-tard-enc"></div>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-wrap" id="t-tard-enc"></div></details>
+      </div>
+    </div>
+
+    <div class="cartao">
+      <h3>Onde ficaram as urnas tardias</h3>
+      <p class="desc">Urnas tardias do 2º turno por UF. Passe o mouse para ver quanto isso representa das seções do estado.</p>
+      <div class="legenda" id="leg-tard-uf"></div>
+      <div class="grafico" id="g-tard-uf"></div>
+      <details class="tabela"><summary>Ver todos os municípios</summary>
+        <p style="margin:10px 0"><input type="search" id="busca-tardias" placeholder="Buscar cidade ou UF"> <a href="urnas_tardias_2turno.csv" download>Baixar CSV com cada urna tardia</a></p>
+        <div class="tabela-wrap" id="t-tard-mun"></div>
+      </details>
+    </div>
+
+    <div class="grade-2">
+      <div class="cartao">
+        <h3>Resultado oficial nas urnas tardias</h3>
+        <p class="desc">Todos os votos do dia nessas seções (Boletim de Urna), comparados com o Brasil.</p>
+        <div class="legenda" id="leg-tard-res"></div>
+        <div class="grafico" id="g-tard-res"></div>
+        <p class="nota" id="nota-tard-res"></p>
+      </div>
+      <div class="cartao">
+        <h3>Essas seções já fechavam tarde no 1º turno?</h3>
+        <p class="desc">As mesmas seções no 1º turno, quando não houve prorrogação.</p>
+        <div class="tiles" id="tiles-tard-1t" style="margin-bottom:0"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="metodologia" class="metodo">
+    <h2>Metodologia</h2>
+    <div class="cartao">
+      <h3>De onde vêm os dados</h3>
+      <p>Só dados oficiais do TSE, de todas as urnas. Não há amostra, projeção nem estimativa.</p>
+      <ul>
+        <li><strong>Resultado oficial</strong>: API de resultados do TSE (<code>resultados.tse.jus.br</code>), Brasil, UF e município, para Presidente nos dois turnos.</li>
+        <li><strong>Log</strong> (<code>log.jez</code>) e <strong>Boletim de Urna</strong> (<code>bu.dat</code>) de cada seção. O log tem a hora de cada voto computado; o boletim tem o resultado da seção e os horários de abertura e encerramento.
+          <ul>
+            <li>1º turno: pacote consolidado "Arquivos transmitidos para totalização" do Portal de Dados Abertos (<code>dadosabertos.tse.jus.br</code>), com os arquivos de todas as urnas totalizadas.</li>
+            <li>2º turno: enquanto esse pacote não é publicado, os mesmos arquivos são baixados seção por seção da API de resultados. Quando o pacote sair, ele passa a ser a fonte.</li>
+          </ul>
+        </li>
+      </ul>
+      <p id="metodo-cobertura"></p>
+      <h3>Como os números são calculados</h3>
+      <ul>
+        <li><strong>Horário</strong>: desde 2022 a votação segue o horário de Brasília em todo o país (8h às 17h), mas o relógio de cada urna marca a hora local. Por isso o Acre vota das 6h às 15h; AM (exceto 11 municípios no fuso do Acre), RR, RO, MT e MS, das 7h às 16h; e Fernando de Noronha, das 9h às 18h. Cada horário do log e do boletim é convertido para Brasília usando esse fuso fixo por município, como na regra do TSE. Não usamos a hora de abertura para deduzir o fuso, porque uma seção que abre atrasada pareceria estar em outro fuso.</li>
+        <li><strong>Votos após as 17h</strong>: contamos as linhas "O voto do eleitor foi computado" do dia da eleição com horário a partir de 17h00 (Brasília). Quando uma urna é trocada no meio do dia, os logs de todas as urnas da seção são somados.</li>
+        <li><strong>Urnas tardias</strong>: seções com encerramento oficial (Boletim de Urna) às 17h49 ou depois, horário de Brasília, que é a hora em que o TSE avisou os TREs da prorrogação. O boletim dessas seções é baixado sempre, para usar o horário oficial e o resultado da seção. A lista com cada urna está no CSV da seção.</li>
+        <li><strong>Contagem parcial</strong>: enquanto um turno não foi todo processado, os números valem só para as seções já processadas, e o site mostra quantas são. Nada é extrapolado.</li>
+        <li><strong>Por candidato</strong>: o voto é secreto, então não há divisão dos votos após as 17h entre candidatos. O site mostra o resultado oficial das seções onde houve voto após as 17h e o máximo que esses votos poderiam representar.</li>
+        <li><strong>Seções agregadas</strong>: algumas seções votam junto com outra e não têm log próprio; os eleitores delas aparecem no log da seção principal.</li>
+        <li><strong>Exterior</strong>: as seções no exterior ficam fora da análise de horário, porque cada país vota no seu horário local.</li>
+        <li><strong>Brancos, nulos e abstenção</strong>: números oficiais da API de resultados do TSE (Brasil, UF e município). Brancos e nulos são do voto para Presidente, em % do comparecimento; abstenção é em % do eleitorado apto. Quando os boletins em massa já estão baixados, os números por município são somados seção a seção, e conferem com a API.</li>
+        <li><strong>Conferência</strong>: o comparecimento contado no log e os votos lidos do boletim de cada seção são comparados com o arquivo oficial de Boletins de Urna do Portal de Dados Abertos.</li>
+      </ul>
+      <h3>Como atualizar</h3>
+      <p>Na pasta do projeto:</p>
+      <pre>python pipeline/atualizar.py</pre>
+      <p>O script baixa o resultado oficial e, para cada turno, processa o pacote consolidado do TSE quando ele existe; se ainda não existe, continua o download seção por seção pela API. Depois recalcula o site.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p id="rodape"></p>
+    <p>Análise independente, sem vínculo com o TSE. Código e dados brutos na pasta do projeto.</p>
+  </footer>
+</div>
+
+<div class="dica" id="dica" role="status" aria-live="polite"></div>
+<script src="dados.js"></script>
+<script src="municipios.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
